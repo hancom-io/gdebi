@@ -1,0 +1,136 @@
+From 5bc1d7da2079d1348f0939214e4f266545f997c2 Mon Sep 17 00:00:00 2001
+From: donghun <donghun@gooroom.kr>
+Date: Mon, 14 Sep 2020 15:50:31 +0900
+Subject: [PATCH] Fixed installation permission errors when running in the
+ Nutilus and changed the UI
+
+Change-Id: Ic3a7001d9d15c61bb5b9b565a1ddcef0819c5e1e
+---
+ data/gdebi.desktop.in |  2 +-
+ data/gdebi.ui         | 59 +++++++++++++++++++++--------------------
+ gooroom-gdebi         |  2 ++
+ setup.py              |  2 +-
+ 4 files changed, 34 insertions(+), 31 deletions(-)
+ create mode 100755 gooroom-gdebi
+
+diff --git a/data/gdebi.desktop.in b/data/gdebi.desktop.in
+index d280e9e..1e064be 100644
+--- a/data/gdebi.desktop.in
++++ b/data/gdebi.desktop.in
+@@ -2,7 +2,7 @@
+ _Name=GDebi Package Installer
+ _GenericName=Package Installer
+ _Comment=Install and view software packages
+-Exec=gdebi-gtk %f
++Exec=/usr/bin/gooroom-gdebi %f
+ Icon=gnome-mime-application-x-deb
+ Terminal=false
+ Type=Application
+diff --git a/data/gdebi.ui b/data/gdebi.ui
+index 964c66c..426b7fe 100644
+--- a/data/gdebi.ui
++++ b/data/gdebi.ui
+@@ -736,6 +736,7 @@ Luca Falavigna
+                 <child>
+                   <object class="GtkHBox" id="hbox2">
+                     <property name="visible">True</property>
++                    <property name="expand">True</property>
+                     <property name="can_focus">False</property>
+                     <child>
+                       <object class="GtkLabel" id="label_status">
+@@ -751,35 +752,6 @@ Luca Falavigna
+                         <property name="position">0</property>
+                       </packing>
+                     </child>
+-                    <child>
+-                      <object class="GtkBox" id="box1">
+-                        <property name="visible">True</property>
+-                        <property name="can_focus">False</property>
+-                        <property name="orientation">vertical</property>
+-                        <child>
+-                          <object class="GtkButton" id="button_details">
+-                            <property name="label" translatable="yes">_Details</property>
+-                            <property name="can_focus">True</property>
+-                            <property name="receives_default">True</property>
+-                            <property name="use_underline">True</property>
+-                            <signal name="clicked" handler="on_button_details_clicked" swapped="no"/>
+-                          </object>
+-                          <packing>
+-                            <property name="expand">False</property>
+-                            <property name="fill">False</property>
+-                            <property name="position">0</property>
+-                          </packing>
+-                        </child>
+-                        <child>
+-                          <placeholder/>
+-                        </child>
+-                      </object>
+-                      <packing>
+-                        <property name="expand">False</property>
+-                        <property name="fill">False</property>
+-                        <property name="position">1</property>
+-                      </packing>
+-                    </child>
+                   </object>
+                   <packing>
+                     <property name="left_attach">1</property>
+@@ -893,6 +865,35 @@ Luca Falavigna
+                     <property name="position">1</property>
+                   </packing>
+                 </child>
++                <child>
++                  <object class="GtkBox" id="box1">
++                    <property name="visible">True</property>
++                    <property name="can_focus">False</property>
++                    <property name="orientation">vertical</property>
++                    <child>
++                      <object class="GtkButton" id="button_details">
++                        <property name="label" translatable="yes">_Details</property>
++                        <property name="can_focus">True</property>
++                        <property name="receives_default">True</property>
++                        <property name="use_underline">True</property>
++                        <signal name="clicked" handler="on_button_details_clicked" swapped="no"/>
++                      </object>
++                      <packing>
++                        <property name="expand">False</property>
++                        <property name="fill">False</property>
++                        <property name="position">0</property>
++                      </packing>
++                    </child>
++                    <child>
++                      <placeholder/>
++                    </child>
++                  </object>
++                  <packing>
++                    <property name="expand">False</property>
++                    <property name="fill">False</property>
++                    <property name="position">1</property>
++                  </packing>
++                </child>
+                 <child>
+                   <placeholder/>
+                 </child>
+diff --git a/gooroom-gdebi b/gooroom-gdebi
+new file mode 100644
+index 0000000..1e68369
+--- /dev/null
++++ b/gooroom-gdebi
+@@ -0,0 +1,2 @@
++#!/bin/bash
++pkexec "/usr/bin/gdebi-gtk" "$@"
+diff --git a/setup.py b/setup.py
+index cf3f562..0b32576 100755
+--- a/setup.py
++++ b/setup.py
+@@ -28,7 +28,7 @@ s = setup(name='gdebi',
+           version=version,
+           test_suite="tests",
+           packages=['GDebi'],
+-          scripts=['gdebi', 'gdebi-gtk', 'gdebi-kde'],
++          scripts=['gdebi', 'gdebi-gtk', 'gdebi-kde', 'gooroom-gdebi'],
+           data_files=[('share/gdebi/',
+                        ['data/gdebi.ui', 'data/GDebiKDEDialog.ui',
+                         'data/GDebiKDEInstallDialog.ui']),
+-- 
+2.20.1
+
