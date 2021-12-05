@@ -1,8 +1,8 @@
-gdebi (0.9.5.7+nmu5-1) unstable; urgency=medium
+gdebi (0.9.5.7+nmu5-1+grm3u1) unstable; urgency=medium
 
- * Added Gooroom patchset
+  * Added Gooroom patchset
 
- -- goorom <gooroom@gooroom.kr>  Mon, 30 Aug 2021 14:47:19 +0900
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Sun, 05 Dec 2021 13:19:03 +0900
 
 gdebi (0.9.5.7+nmu5) unstable; urgency=medium
 
